@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 # Define a function to take food orders
