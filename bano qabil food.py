@@ -1,46 +1,33 @@
 import streamlit as st
-import sqlite3
 
-# Create a connection to the SQLite database
-conn = sqlite3.connect('food_orders.db')
+# You can import other libraries here as needed
+st.title("Food Ordering App")
+st.subheader("Welcome to our delicious food ordering app!")
+user_name = st.text_input("What's your name?")
+cuisines = ["Italian", "Chinese", "Indian", "Mexican", "Thai"]
+cuisine_choice = st.selectbox("Choose your favorite cuisine", cuisines)
+dishes = {
+    "Italian": ["Pizza", "Pasta", "Lasagna"],
+    "Chinese": ["Fried Rice", "Noodles", "Dumplings"],
+    "Indian": ["Biryani", "Curry", "Naan"],
+    "Mexican": ["Tacos", "Burritos", "Quesadillas"],
+    "Thai": ["Pad Thai", "Curry", "Spring Rolls"],
+}
 
-# Create a cursor object to interact with the database
-cursor = conn.cursor()
+selected_dishes = st.multiselect(f"Select dishes from {cuisine_choice}", dishes[cuisine_choice])
+order = {
+    "name": user_name,
+    "cuisine": cuisine_choice,
+    "dishes": selected_dishes,
+}
 
-# Create the table if it doesn't exist
-cursor.execute('''CREATE TABLE IF NOT EXISTS orders
-                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   food_item TEXT,
-                   size TEXT,
-                   extra_toppings TEXT,
-                   timestamp TEXT)''')
+order_summary = f"Name: {order['name']}\nCuisine: {order['cuisine']}\nDishes: {', '.join(order['dishes'])}\n"
+st.write(order_summary)
 
-# Define a function to take food orders
-def take_order():
-    food_options = ["Pizza", "Burger", "Pasta", "Salad"]
-    food_choice = st.selectbox("What would you like to order?", food_options)
-    size_options = ["Small", "Medium", "Large"]
-    size_choice = st.selectbox("What size would you like?", size_options)
-    extra_toppings = st.text_input("Any extra toppings or requests?")
-    return food_choice, size_choice, extra_toppings
-
-# Display a welcome message
-st.write("Welcome to the Food Ordering App!")
-
-# Take the user's order
-food_order = take_order()
-
-# Save the order to the database
-timestamp = st.timestamp('YYYY-MM-DD HH:mm:ss')
-order_data = (food_order[0], food_order[1], food_order[2], timestamp)
-cursor.execute("INSERT INTO orders (food_item, size, extra_toppings, timestamp) VALUES (?, ?, ?, ?)", order_data)
-conn.commit()
-
-# Display the user's order
-st.write(f"You ordered a {food_order[1]} {food_order[0]} with the following extra toppings/requests: {food_order[2]}")
-
-# Display a list of all orders
-st.write("All orders:")
-orders = cursor.execute("SELECT * FROM orders").fetchall()
-for order in orders:
-    st.write(f"{order[0]}: {order[1]} {order[2]} ({order[4]})")
+# You can calculate the total price based on your pricing for each dish
+# For simplicity, let's assume each dish costs $10
+total_price = len(order["dishes"]) * 10
+st.write(f"Total price: ${total_price}")
+if st.button("Submit Order"):
+    st.write("Thank you for your order! Our team will prepare your food and notify you when it's ready.")
+  
