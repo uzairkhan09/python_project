@@ -15,7 +15,7 @@ def display_menu():
     
     selected_items = {}
     for item, (image_url, price) in menu_items.items():
-        quantity = st.number_input(f"{item} (₹{price})", min_value=0, step=1, value=0)
+        quantity = st.number_input(f"{item} (Rs{price})", min_value=0, step=1, value=0)
         st.image(image_url, caption=item, use_column_width=True)
         if quantity > 0:
             selected_items[item] = (quantity, price)
