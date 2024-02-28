@@ -57,6 +57,22 @@ def main():
     st.title("Food Ordering System")
     
     selected_items = display_menu()
+
+    import streamlit as st
+
+def main():
+    st.title("Food Ordering System")
+
+    st.subheader("Feedback")
+    st.markdown("[FEEDBACK](mailto:arhamali89p@gmail.com)")
+    st.write("Receiver email: arhamali89p@gmail.com")
+
+    st.subheader("Web Reference")
+    st.markdown("[WEB Reference](https://www.foodpanda.com/)")
+
+if __name__ == "__main__":
+    main()
+
     
     if selected_items:
         total = calculate_total(selected_items)
