@@ -7,7 +7,7 @@ def display_menu():
     st.subheader("Select items to order:")
     
     menu_items = {
-        "Pizza": ("https://imageurl/pizza.jpg", 10),
+        "Pizza": ("E:\pizza.jpg", 10),
         "Burger": ("https://imageurl/burger.jpg", 8),
         "Salad": ("https://imageurl/salad.jpg", 6),
         "Pasta": ("https://imageurl/pasta.jpg", 12)
