@@ -7,23 +7,24 @@ def display_menu():
     st.subheader("Select items to order:")
     
     menu_items = {
-        "Pizza": 10,
-        "Burger": 8,
-        "Salad": 6,
-        "Pasta": 12
+        "Pizza": {"price": 10, "image": "pizza.jpg"},
+        "Burger": {"price": 8, "image": "burger.jpg"},
+        "Salad": {"price": 6, "image": "salad.jpg"},
+        "Pasta": {"price": 12, "image": "pasta.jpg"}
     }
     
     selected_items = {}
-    for item, price in menu_items.items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, step=1, value=0)
+    for item, info in menu_items.items():
+        quantity = st.number_input(f"{item} (${info['price']})", min_value=0, step=1, value=0)
         if quantity > 0:
-            selected_items[item] = quantity
+            selected_items[item] = {"quantity": quantity, "price": info["price"]}
+            st.image(info["image"], caption=item, use_column_width=True)
             
     return selected_items
 
 # Function to calculate total order price
 def calculate_total(selected_items):
-    total = sum([quantity * price for item, quantity in selected_items.items()])
+    total = sum([info["quantity"] * info["price"] for item, info in selected_items.items()])
     return total
 
 # Function to display contact us section
@@ -60,7 +61,7 @@ def main():
     if selected_items:
         total = calculate_total(selected_items)
         st.write(f"Total Price: ${total}")
-        if st.button("Place Order"):
+        if st.button("Order Now"):
             # Placeholder for order placement logic (can be saved to a database)
             st.write("Your order has been placed!")
     
