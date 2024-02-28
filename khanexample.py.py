@@ -7,6 +7,7 @@ def display_menu():
     st.subheader("Select items to order:")
     
     menu_items = {
+         st.image("icc.jpg", use_column_width=True)
         "Pizza": ("https://imageurl/pizza.jpg", 500),
         "Burger": ("https://imageurl/burger.jpg", 400),
         "Salad": ("https://imageurl/salad.jpg", 300),
