@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # Function to display available menu items
 def display_menu():
@@ -25,48 +26,51 @@ def calculate_total(selected_items):
     total = sum([quantity * price for item, quantity in selected_items.items()])
     return total
 
-# Function to handle order placement
-def place_order(selected_items, total):
-    st.write("Your order has been placed successfully!")
-    st.write("Order Details:")
-    for item, quantity in selected_items.items():
-        st.write(f"- {item}: {quantity}")
-    st.write(f"Total Price: ${total}")
-
 # Function to display contact us section
 def contact_us():
     st.header("Contact Us")
-    st.write("If you have any questions, concerns, or feedback, please fill out the following form:")
-    name = st.text_input("Name:")
-    email = st.text_input("Email:")
-    message = st.text_area("Message:")
+    st.write("If you have any questions or concerns, please fill out the form below:")
+    
+    name = st.text_input("Name")
+    email = st.text_input("Email")
+    message = st.text_area("Message")
     
     if st.button("Submit"):
-        st.write("\nThank you for your message! We will get back to you as soon as possible.\n")
+        st.write("Thank you for reaching out to us! We will get back to you as soon as possible.")
 
-# Function to display order history (dummy data)
-def order_history():
+# Function to display order history
+def display_order_history():
     st.header("Order History")
-    st.write("You have no recent orders.")
+    # Sample order history data (can be fetched from a database)
+    order_history_data = {
+        "Order ID": [101, 102, 103],
+        "Items": ["Pizza, Burger", "Salad", "Pasta"],
+        "Total Price ($)": [18, 6, 12],
+        "Date": ["2024-02-01", "2024-02-15", "2024-02-28"]
+    }
+    order_history_df = pd.DataFrame(order_history_data)
+    st.dataframe(order_history_df)
 
 # Main function to run the Streamlit app
 def main():
     st.title("Food Ordering System")
+    
+    selected_items = display_menu()
+    
+    if selected_items:
+        total = calculate_total(selected_items)
+        st.write(f"Total Price: ${total}")
+        if st.button("Place Order"):
+            # Placeholder for order placement logic (can be saved to a database)
+            st.write("Your order has been placed!")
+    
     st.sidebar.title("Navigation")
+    nav_option = st.sidebar.radio("Go to", ("Contact Us", "Order History"))
     
-    menu_options = ["Menu", "Contact Us", "Order History"]
-    choice = st.sidebar.selectbox("Go to", menu_options)
-    
-    if choice == "Menu":
-        selected_items = display_menu()
-        if selected_items:
-            total = calculate_total(selected_items)
-            if st.button("Place Order"):
-                place_order(selected_items, total)
-    elif choice == "Contact Us":
+    if nav_option == "Contact Us":
         contact_us()
-    elif choice == "Order History":
-        order_history()
+    elif nav_option == "Order History":
+        display_order_history()
 
 if __name__ == "__main__":
     main()
