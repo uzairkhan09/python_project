@@ -7,15 +7,15 @@ def display_menu():
     st.subheader("Select items to order:")
     
     menu_items = {
-        "Pizza": ("https://imageurl/pizza.jpg", 10),
-        "Burger": ("https://imageurl/burger.jpg", 8),
-        "Salad": ("https://imageurl/salad.jpg", 6),
-        "Pasta": ("https://imageurl/pasta.jpg", 12)
+        "Pizza": ("https://imageurl/pizza.jpg", 500),
+        "Burger": ("https://imageurl/burger.jpg", 400),
+        "Salad": ("https://imageurl/salad.jpg", 300),
+        "Pasta": ("https://imageurl/pasta.jpg", 600)
     }
     
     selected_items = {}
     for item, (image_url, price) in menu_items.items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, step=1, value=0)
+        quantity = st.number_input(f"{item} (₹{price})", min_value=0, step=1, value=0)
         st.image(image_url, caption=item, use_column_width=True)
         if quantity > 0:
             selected_items[item] = (quantity, price)
@@ -46,7 +46,7 @@ def display_order_history():
     order_history_data = {
         "Order ID": [101, 102, 103],
         "Items": ["Pizza, Burger", "Salad", "Pasta"],
-        "Total Price ($)": [18, 6, 12],
+        "Total Price (₹)": [900, 600, 1200],
         "Date": ["2024-02-01", "2024-02-15", "2024-02-28"]
     }
     order_history_df = pd.DataFrame(order_history_data)
@@ -60,7 +60,7 @@ def main():
     
     if selected_items:
         total = calculate_total(selected_items)
-        st.write(f"Total Price: ${total}")
+        st.write(f"Total Price: ₹{total}")
         if st.button("Order Now"):
             # Placeholder for order placement logic (can be saved to a database)
             st.write("Your order has been placed!")
