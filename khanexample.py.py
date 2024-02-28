@@ -1,30 +1,30 @@
 import streamlit as st
 import pandas as pd
 
-# Function to display available menu items
+# Function to display available menu items with images
 def display_menu():
     st.header("Menu")
     st.subheader("Select items to order:")
     
     menu_items = {
-        "Pizza": {"price": 10, "image": "pizza.jpg"},
-        "Burger": {"price": 8, "image": "burger.jpg"},
-        "Salad": {"price": 6, "image": "salad.jpg"},
-        "Pasta": {"price": 12, "image": "pasta.jpg"}
+        "Pizza": ("https://imageurl/pizza.jpg", 10),
+        "Burger": ("https://imageurl/burger.jpg", 8),
+        "Salad": ("https://imageurl/salad.jpg", 6),
+        "Pasta": ("https://imageurl/pasta.jpg", 12)
     }
     
     selected_items = {}
-    for item, info in menu_items.items():
-        quantity = st.number_input(f"{item} (${info['price']})", min_value=0, step=1, value=0)
+    for item, (image_url, price) in menu_items.items():
+        quantity = st.number_input(f"{item} (${price})", min_value=0, step=1, value=0)
+        st.image(image_url, caption=item, use_column_width=True)
         if quantity > 0:
-            selected_items[item] = {"quantity": quantity, "price": info["price"]}
-            st.image(info["image"], caption=item, use_column_width=True)
+            selected_items[item] = (quantity, price)
             
     return selected_items
 
 # Function to calculate total order price
 def calculate_total(selected_items):
-    total = sum([info["quantity"] * info["price"] for item, info in selected_items.items()])
+    total = sum([quantity * price for item, (quantity, price) in selected_items.items()])
     return total
 
 # Function to display contact us section
@@ -57,22 +57,6 @@ def main():
     st.title("Food Ordering System")
     
     selected_items = display_menu()
-
-    
-
-def main():
-    st.title("Food Ordering System")
-
-    st.subheader("Feedback")
-    st.markdown("[FEEDBACK](mailto:arhamali89p@gmail.com)")
-    st.write("Receiver email: arhamali89p@gmail.com")
-
-    st.subheader("Web Reference")
-    st.markdown("[WEB Reference](https://www.foodpanda.com/)")
-
-if __name__ == "__main__":
-    main()
-
     
     if selected_items:
         total = calculate_total(selected_items)
@@ -82,12 +66,17 @@ if __name__ == "__main__":
             st.write("Your order has been placed!")
     
     st.sidebar.title("Navigation")
-    nav_option = st.sidebar.radio("Go to", ("Contact Us", "Order History"))
+    nav_option = st.sidebar.radio("Go to", ("Contact Us", "Order History", "Feedback"))
     
     if nav_option == "Contact Us":
         contact_us()
     elif nav_option == "Order History":
         display_order_history()
+    elif nav_option == "Feedback":
+        st.header("Feedback")
+        feedback = st.text_area("Please provide your feedback here:")
+        if st.button("Submit Feedback"):
+            st.write("Thank you for your feedback!")
 
 if __name__ == "__main__":
     main()
