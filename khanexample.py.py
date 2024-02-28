@@ -46,7 +46,7 @@ def display_order_history():
     order_history_data = {
         "Order ID": [101, 102, 103],
         "Items": ["Pizza, Burger", "Salad", "Pasta"],
-        "Total Price (₹)": [900, 600, 1200],
+        "Total Price (Rs)": [900, 600, 1200],
         "Date": ["2024-02-01", "2024-02-15", "2024-02-28"]
     }
     order_history_df = pd.DataFrame(order_history_data)
