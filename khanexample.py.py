@@ -58,7 +58,7 @@ def main():
     
     selected_items = display_menu()
 
-    import streamlit as st
+    
 
 def main():
     st.title("Food Ordering System")
