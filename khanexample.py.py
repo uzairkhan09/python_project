@@ -7,7 +7,7 @@ def display_menu():
     st.subheader("Select items to order:")
     
     menu_items = {
-        "Pizza": ("E:\pizza.jpg", 10),
+        "Pizza": ("https://imageurl/pizza.jpg", 10),
         "Burger": ("https://imageurl/burger.jpg", 8),
         "Salad": ("https://imageurl/salad.jpg", 6),
         "Pasta": ("https://imageurl/pasta.jpg", 12)
@@ -47,7 +47,7 @@ def display_order_history():
         "Order ID": [101, 102, 103],
         "Items": ["Pizza, Burger", "Salad", "Pasta"],
         "Total Price ($)": [18, 6, 12],
-        "Date": ["yy.mm.dd"]
+        "Date": ["2024-02-01", "2024-02-15", "2024-02-28"]
     }
     order_history_df = pd.DataFrame(order_history_data)
     st.dataframe(order_history_df)
