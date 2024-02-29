@@ -3,7 +3,7 @@ import pandas as pd
 
 # Function to display available menu items with images
 def display_menu():
-    st.title("banoqabil 2.0 final project")
+    st.title("Bano Qabil 2.0 Final Project")
     st.header("Menu")
     st.subheader("Select items to order:")
     
