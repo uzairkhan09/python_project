@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Function to display available menu items with images
-def menu_display():
+def display_menu():
     st.title("banoqabil 2.0 final project")
     st.header("Menu")
     st.subheader("Select items to order:")
